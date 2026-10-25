@@ -427,7 +427,7 @@ def arrow(ax, x1, y1, x2, y2, color="0.25", lw=0.9, ls="-", label=None,
                 ha="center", va="center", color=color, zorder=4)
 
 
-def draw_model(ax, a=None, b=None, cp=None):
+def draw_model(ax):
     ax.set_xlim(0, 17.2)
     ax.set_ylim(0, 7.7)
     ax.axis("off")
@@ -437,12 +437,9 @@ def draw_model(ax, a=None, b=None, cp=None):
     box(ax, 6.5, 0.6, 3.4, 1.2, "Adaptive\nresponse")
     box(ax, 0.3, 2.4, 3.4, 1.2, "Self-efficacy\nsocial support")
     box(ax, 13.0, 2.4, 3.4, 1.2, "Threat\nappraisal")
-    la = f"a = {a:.2f}" if a is not None else "a"
-    lb = f"b = {b:.2f}" if b is not None else "b"
-    lc = f"c' = {cp:.2f}" if cp is not None else "c'"
-    arrow(ax, 3.7, 5.5, 6.5, 5.5, label=la, ly=0.22)
-    arrow(ax, 9.9, 5.5, 13.0, 5.5, label=lb, ly=0.22)
-    arrow(ax, 1.6, 6.1, 15.8, 6.1, ls="--", label=lc, ly=1.2, rad=-0.06)
+    arrow(ax, 3.7, 5.5, 6.5, 5.5, label="a", ly=0.22)
+    arrow(ax, 9.9, 5.5, 13.0, 5.5, label="b", ly=0.22)
+    arrow(ax, 1.6, 6.1, 15.8, 6.1, ls="--", label="c'", ly=1.2, rad=-0.06)
     arrow(ax, 8.2, 4.9, 8.2, 1.8, label="d", lx=0.18)
     arrow(ax, 13.0, 4.9, 9.9, 1.8, label="e", lx=-0.5, ly=0.15)
     arrow(ax, 2.0, 3.6, 7.0, 4.9, color="0.55")
@@ -467,13 +464,13 @@ fig, axes = plt.subplots(2, 2, figsize=(7.6, 3.8), constrained_layout=True)
 ax = axes[0, 0]
 cf = field_map(ax, hazard_field, "magma", 0, 1, "hazard")
 panel_label(ax, "a")
-cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.02)
+cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.02, shrink=0.75)
 cb.set_label("Climate hazard exposure index", fontsize=7)
 
 ax = axes[0, 1]
 cf = field_map(ax, ph_field, "cividis", 0, 1, "PH")
 panel_label(ax, "b")
-cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.02)
+cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.02, shrink=0.75)
 cb.set_label("Perceived habitability", fontsize=7)
 
 ax = axes[1, 0]
@@ -491,7 +488,7 @@ panel_label(ax, "c")
 ax = axes[1, 1]
 cf = field_map(ax, distress_field, "inferno", 0, 1, "distress")
 panel_label(ax, "d")
-cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.02)
+cb = fig.colorbar(cf, ax=ax, fraction=0.05, pad=0.02, shrink=0.75)
 cb.set_label("Psychological distress", fontsize=7)
 fig.savefig(os.path.join(FIGDIR, "fig2_maps.pdf"))
 plt.close(fig)
@@ -501,7 +498,7 @@ fig = plt.figure(figsize=(7.6, 5.0))
 gs = fig.add_gridspec(2, 2, width_ratios=[1.0, 1.0],
                       height_ratios=[1.15, 1.0], hspace=0.65, wspace=0.5)
 ax = fig.add_subplot(gs[0, :])
-draw_model(ax, a=a, b=b, cp=c_direct)
+draw_model(ax)
 panel_label(ax, "a")
 
 ax = fig.add_subplot(gs[1, 0])
@@ -554,13 +551,13 @@ panel_label(ax, "b")
 ax = fig.add_subplot(gs[1, 0])
 cf = field_map(ax, current_risk_field, "inferno", 0, 1, "current risk")
 panel_label(ax, "c")
-cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.02)
+cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.02, shrink=0.45)
 cb.set_label("Current psychological risk", fontsize=7)
 
 ax = fig.add_subplot(gs[1, 1])
 cf = field_map(ax, risk_field, "inferno", 0, 1, "risk")
 panel_label(ax, "d")
-cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.02)
+cb = fig.colorbar(cf, ax=ax, fraction=0.04, pad=0.02, shrink=0.45)
 cb.set_label("Projected psychological risk", fontsize=7)
 fig.savefig(os.path.join(FIGDIR, "fig4_profiles.pdf"))
 plt.close(fig)
